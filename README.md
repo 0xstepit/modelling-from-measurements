@@ -20,20 +20,23 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
  4. [Data Assimilation](Lectures/Lecture05.pdf)
     * Kalman Filters
 - [Notebooks](notebooks/)
-  1. <p align="center">
+  1. [Notebook 1]()
+  <p align="center">
 <img src="storage/figures/pca.png" width="640" />
 </p>
 <p align="center">
     Figure: Principal components of a linear transformation
 </p>
-3. <p align="center">
-<img src="storage/figures/nls.gif" width="640" />
+3. [Notebook 3]()
+<p align="center">
+<img src="storage/figures/nls.gif" width="500" />
 </p>
 <p align="center">
     Figure: Nonlinear Schrödinger (NLS) equation
 </p>
-5. <p align="center">
-<img src="storage/figures/lorenz.gif" width="640" />
+5. [Notebook 5]()
+<p align="center">
+<img src="storage/figures/lorenz.gif" width="500" />
 </p>
 <p align="center">
     Figure: Lorenz equations
