@@ -8,8 +8,9 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
 
 # Table of Contents
 - [Lectures](Lectures/)
- 1. [Lecture 1](Lectures/Lectures/Lecture01.pdf)
-    * Singular Value Decomposition
+ 1. [SIngular Values Decomposition](Lectures/Lecture01.pdf)
+    * Principal Components
+    * Coordinates Discovery
  3. [Data Driven Dynamical Systems](Lectures/Lecture03.pdf)
     * Dynamic Mode Decompositition (DMD)
     * Koopman Operator
@@ -19,8 +20,9 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
  4. [Data Assimilation](Lectures/Lecture05.pdf)
     * Kalman Filters
 - [Notebooks](notebooks/)
-  1. <p align="center">
-    <img src="storage/figures/pca.png" width="640"\>
+  1. 
+<p align="center">
+<img src="storage/figures/pca.png" width="640" />
 </p>
 <p align="center">
     Figure: Principal components of a linear transformation
