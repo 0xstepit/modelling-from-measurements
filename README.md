@@ -29,14 +29,14 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
 </p>
 3. [Notebook 3]()
 <p align="center">
-<img src="storage/figures/nls.gif" width="500" />
+<img src="storage/figures/nls.gif" width="400" />
 </p>
 <p align="center">
     Figure: Nonlinear Schrödinger (NLS) equation
 </p>
 5. [Notebook 5]()
 <p align="center">
-<img src="storage/figures/lorenz.gif" width="500" />
+<img src="storage/figures/lorenz.gif" width="400" />
 </p>
 <p align="center">
     Figure: Lorenz equations
