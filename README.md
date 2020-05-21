@@ -22,7 +22,7 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
 - [Notebooks](notebooks/)
  1. [Notebook 1]()
   <p align="center">
-<img src="storage/figures/pca.png" width="640" />
+<img src="storage/figures/pca.png" width="750" />
 </p>
 <p align="center">
     Figure: Principal components of a linear transformation
