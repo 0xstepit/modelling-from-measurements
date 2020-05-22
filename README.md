@@ -15,10 +15,13 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
     * Dynamic Mode Decompositition (DMD)
     * Koopman Operator
     * Time Delay Embeddings
- 3. [Regression and Model Selection](Lectures/Lecture04.pdf)
+ 4. [Regression and Model Selection](Lectures/Lecture04.pdf)
     * Model Discovery
- 4. [Data Assimilation](Lectures/Lecture05.pdf)
+ 5. [Data Assimilation](Lectures/Lecture05.pdf)
     * Kalman Filters
+ 6. [Artificial Neural Networks](Lectures/Lecture06.pdf)
+    * Backpropagation
+    * Gradient Descent
 - [Notebooks](notebooks/)
  1. [Notebook 1]()
   <p align="center">
