@@ -17,7 +17,7 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
     * Time Delay Embeddings
  3. [Regression and Model Selection](Lectures/Lecture04.pdf)
     * Model Discovery
- 4. [Data Assimilation](Lectures/Lecture05.pdf)
+ 7. [Data Assimilation](Lectures/Lecture05.pdf)
     * Kalman Filters
 - [Notebooks](notebooks/)
  1. [Notebook 1]()
