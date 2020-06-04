@@ -22,25 +22,33 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
  6. [Artificial Neural Networks](Lectures/Lecture06.pdf)
     * Backpropagation
     * Gradient Descent
+ 7. [Artificial Neural Networks](Lectures/Lecture07.pdf)
+    * CNN
+ 8. [Sensors](Lectures/Lecture08.pdf)
+    * Compressed Sensing
+    * Gappy POD
 - [Notebooks](notebooks/)
- 1. [Notebook 1]()
+ 1. [Notebook 1](notebooks/Notebook01.ipynb)
   <p align="center">
 <img src="storage/figures/pca.png" width="750" />
 </p>
 <p align="center">
     Figure: Principal components of a linear transformation
 </p>
-3. [Notebook 3]()
+3. [Notebook 3](notebooks/Notebook03.ipynb)
 <p align="center">
 <img src="storage/figures/nls.gif" width="400" />
 </p>
 <p align="center">
     Figure: Nonlinear Schrödinger (NLS) equation
 </p>
-5. [Notebook 5]()
+4. [Notebook 4](notebooks/Notebook04.ipynb)
+5. [Notebook 5](notebooks/Notebook05.ipynb)
 <p align="center">
 <img src="storage/figures/lorenz.gif" width="400" />
 </p>
 <p align="center">
     Figure: Lorenz equations
 </p>
+6. [Notebook 6](notebooks/Notebook06.ipynb)
+7. [Notebook 7](notebooks/Notebook07.ipynb)
