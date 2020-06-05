@@ -27,13 +27,14 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
  8. [Sensors](Lectures/Lecture08.pdf)
     * Compressed Sensing
     * Gappy POD
+
 - [Notebooks](notebooks/)
  1. [Notebook 1](notebooks/Notebook01.ipynb)
   <p align="center">
 <img src="storage/figures/pca.png" width="750" />
 </p>
 <p align="center">
-    Figure: Principal components of a linear transformation
+    Figure: Principal components of a linear transformation matrix
 </p>
 3. [Notebook 3](notebooks/Notebook03.ipynb)
 <p align="center">
@@ -51,4 +52,12 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
     Figure: Lorenz equations
 </p>
 6. [Notebook 6](notebooks/Notebook06.ipynb)
+<p align="center">
+<img src="storage/figures/sgd.gif" width="400" />
+</p>
+<p align="center">
+    Figure: Stochastic gradient descent
+</p>
 7. [Notebook 7](notebooks/Notebook07.ipynb)
+
+- [Papers](papers/)
