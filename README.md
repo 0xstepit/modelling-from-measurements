@@ -8,7 +8,7 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
 
 # Table of Contents
 - [Homework](homework/)
-  1. [Final Report](homework/report/report.pdf)
+ 1. [Final Report](homework/report/report.pdf)
 - [Lectures](Lectures/)
  1. [SIngular Values Decomposition](Lectures/Lecture01.pdf)
     * Principal Components
@@ -32,14 +32,14 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
 - [Notebooks](notebooks/)
  1. [Notebook 1](notebooks/Notebook01.ipynb)
     <p align="center">
-    <img src="storage/figures/pca.png" width="750" />
+    <img src="storage/figures/pca.png" width="650" />
     </p>
     <p align="center">
     Figure: Principal components of a linear transformation matrix
     </p>
  3. [Notebook 3](notebooks/Notebook03.ipynb)
     <p align="center">
-    <img src="storage/figures/nls.gif" width="400" />
+    <img src="storage/figures/nls.gif" width="300" />
     </p>
     <p align="center">
     Figure: Nonlinear Schrödinger (NLS) equation
@@ -47,7 +47,7 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
  4. [Notebook 4](notebooks/Notebook04.ipynb)
  5. [Notebook 5](notebooks/Notebook05.ipynb)
     <p align="center">
-    <img src="storage/figures/lorenz.gif" width="400" />
+    <img src="storage/figures/lorenz.gif" width="300" />
     </p>
     <p align="center">
     Figure: Lorenz equations
@@ -60,4 +60,3 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
      Figure: Stochastic gradient descent
      </p>
  7. [Notebook 7](notebooks/Notebook07.ipynb)
-- [Papers](papers/)
