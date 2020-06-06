@@ -3,3 +3,14 @@
 
 # Exclude Jupiter checkpoints
 .ipynb_checkpoints
+
+# Exclude some latex files:
+*.bib
+*.aux
+*.bbl
+*.log
+*.out
+*.bcf
+*.run.xml
+*.log
+*.gz
