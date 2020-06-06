@@ -7,6 +7,8 @@ This repo contains notes and homeworks of the course "Modeling from Measurements
 </p>
 
 # Table of Contents
+- [Homework](homework/)
+  1. [Final Report](homework/report/report.pdf)
 - [Lectures](Lectures/)
  1. [SIngular Values Decomposition](Lectures/Lecture01.pdf)
     * Principal Components
