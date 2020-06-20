@@ -41,8 +41,17 @@
 
 \usepackage{titling} % Customizing the title section
 
-\usepackage{hyperref} % For hyperlinks in the PDF
+\usepackage{xfrac}
 
+\usepackage[dvipsnames]{xcolor}
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=Gray,
+	citecolor=Gray,
+	urlcolor=airforceblue,
+}
 %----------------------------------------------------------------------------------------
 %	TITLE SECTION
 %----------------------------------------------------------------------------------------
@@ -65,24 +74,17 @@
 \date{\today} % Leave empty to omit a date
 \renewcommand{\maketitlehookd}{%
 \begin{abstract}
-\noindent Nowadays the technology is going toward a new scientific revolution, and together with it also the matemathics, engineering, physics, computer science and almost all the other scientific and humanistic fields. This revolution is driven by the concept of Data. In this report, different strategies able to find synergy between mathematical models and available data will be described and investigate. Different dynamical problems will be considered in the following of this work in order to evaluate the capability of different data driven techniques to manage highly nonlinear system, periodic system, chaotic system and even coarse data. 
+\noindent Nowadays the technology is going towards a new scientific revolution, and together with it also the mathematics, engineering, physics, computer science, and almost all the other scientific and humanistic fields. This revolution is driven by the concept of Data. In this report, different strategies able to find synergy between mathematical models and available data will be described and investigated. Several dynamical problems will be considered in order to evaluate the capability of different data-driven techniques to manage: highly nonlinear system, periodic system, chaotic system, and data sets with coarse data.
 \end{abstract}
 }
 
-%----------------------------------------------------------------------------------------
-
 \begin{document}
 
-% Print the title
 \maketitle
 
-%----------------------------------------------------------------------------------------
-%	ARTICLE CONTENTS
-%----------------------------------------------------------------------------------------
-
 \section{Introduction and Overview}
+\lettrine[nindent=0em,lines=3]{I}n the era of Big Data, people are overwhelmed by an almost infinite amount of data about their personal health, the weather, the state of a building or even the motion of natural and artificial bodies in space just to name a few. The availability of this vast amount of data is gradually changing the approach to solving a problem. In order to better understand the possibility and the best way to integrate data with mathematical models, different well studied problems will be considered. By working on models of which we are aware of the laws that govern their behavior it is possible to evaluate the effectiveness, or not, of a certain strategy, thanks to the possibility of generating artificial data through numerical simulations.
 
-\lettrine[nindent=0em,lines=3]{I}n the era of Big Data, people are overwhelmed by an almost infinite amount of data about their personal health, the weather, the state of a building and even the motion of natural and artificial bodies in space. The availability of this vast amount of data is gradually changing the approach to solving a problem. In order to better understand the possibility and the best way to integrate data with mathematical models, different well studied problems will be considered. By working on models of which we are aware of the laws that govern its behavior it is possible to evaluate the effectiveness or not of a certain strategy, thanks to the possibility of generating artificial data through numerical simulation. 
 \subsection{Lotka-Volterra Equations}
 Lotka-Volterra (LV) equations are used to model the behavior of a biological system in which just two species interact, one that represents the pray and the other the predator.
 \begin{equation}
@@ -91,17 +93,17 @@ Lotka-Volterra (LV) equations are used to model the behavior of a biological sys
 \frac{d}{dt}y &= (rx - d) y
 \end{aligned}
 \end{equation}
-where $p, b, p, r$ and $d$ are nonnegative coefficients.
+where $p, b, r$ and $d$ are nonnegative coefficients.
 
 \subsection{Kuramoto-Sivashinsky Equation}
-The Kuramoto-Sivashinsky (KS) equation represents a pattern forming system with spatio-temporal chaotic behavior. In one dimension we can write the equation as:
+The Kuramoto-Sivashinsky (KS) equation represents a pattern forming system with spatio-temporal chaotic behavior. In one dimension it is possible to write the equation as:
 \begin{equation}\label{ks}
 \begin{aligned}
 u_t &= -uu_x - u_{xx} - u_{xxxx}  \\
 &+ \textit{periodic BCs}
 \end{aligned}
 \end{equation}
-Equation \eqref{ks} represents a nonlinear partial differential equation with chaotic  behavior. The KS equation can be used to model the diffusive instabilities in a laminar flame front.
+The KS equation can be used to model the diffusive instabilities in a laminar flame front.
 
 \subsection{Lorenz Equations}
 The Lorenz equations are a simplified model of convection-driven atmospheric motion. They are very sensitive to initial conditions so that a small perturbation of them causes a completely different trajectory of the system.
@@ -125,55 +127,52 @@ u_t &= (1-(u^2 +v^2))u+ \beta (u^2 +v^2)v+d_1(u_{xx} +u_{yy}) \\
 v_t &=  - \beta (u^2 +v^2)u+(1-(u^2 +v^2))v+d_2(v_{xx} +v_{yy})
 \end{aligned}
 \end{equation}
-where the parameters $d_1, d_2$ and $\beta$ have been fixed respectively to $0.1, 0.1$ and $1$. 
-%------------------------------------------------
+where the parameters $d_1, d_2$ and $\beta$ are model' parameters. 
 
 \section{Theoretical Background}
-In this paper we will consider nonlinear dynamical systems of the form:
+In this paper will be consider nonlinear dynamical systems of the form:
 \begin{equation}\label{dynsys1}
     \frac{d}{dt}\textbf{x} =\textbf{f}(\textbf{x}(t), \boldsymbol\beta)
 \end{equation}
-where $\textbf{x}(t) \in \mathcal{R}^n$ denotes the state of the system at time t, $\boldsymbol\beta$ denotes the system parameters and $\textbf{f}$ describes the evolution of the system in time.
-In the context of a data-driven approach, we have to consider that we don't have the differential equations that govern the system but just some realizations of it. We can describe the relationship between two consecutive realizations as a discrete-time dynamical system:
+where $\textbf{x}(t) \in \mathcal{R}^n$ denotes the state of the system at time t, $\boldsymbol\beta$ denotes the system parameters and $\textbf{f}$ describes the evolution of the system in time. It is possible to describe the relationship between two consecutive realizations as a discrete-time dynamical system:
 \begin{equation}\label{dynsys2}
     \textbf{x}_{k+1} =\textbf{F}(\textbf{x}_k)
 \end{equation}
 where each realization is interpreted as a sample on the system trajectory.
-%
+
 \subsection{Dynamic Mode Decomposition}
-DMD is a powerful tool that can be applied in the analysis of a dynamical system. The idea behind this algorithm is that it is possible to express the future state as a linear combination of the actual state. At the core of DMD, there is the Singular Value Decomposition (SVD), an algorithm that allows discovering the principal directions of the data set. These principal directions are extremely useful since allow for a linear transformation of the coordinate system into one in which we can exploit the variance of the features and we can apply dimensionality reduction.\\
-The DMD algorithm allows to discover the best representation in term of reduced spatial coordinates and a way in which advance this coordinates in time \cite{brunton2019}. Given $m$ realizations, or snapshots, of an $n-$dimensional state vector $\textbf x$ we can stack them into an $n \times m$ matrix $\textbf X$. From the matrix $\textbf X$ we can build another matrix $\textbf X'$, which is nothing but the former matrix shifted one time step ahead. The goal is to discover the best fit linear operator that allows to advance the state vector in time:
+The idea behind this algorithm is that it is possible to express the future state as a linear combination of the actual state. At the core of DMD, there is the Singular Value Decomposition (SVD), a mathematical tool able to discover the principal coordinate system of the data in term of explained variance. The DMD algorithm allows discovering the best representation in term of reduced spatial coordinates and a way in which advance this coordinates in time \cite{brunton2019}. Given $m$ realizations, or snapshots, of an $n-$dimensional state vector $\textbf x$ it is possible to stack them into an $n \times m$ matrix $\textbf X$. From the matrix $\textbf X$, it is possible to build another matrix $\textbf X'$, which is nothing but the former matrix shifted one time step ahead. The goal is to discover the best fit \textit{linear operator} that allows to advance the state vector in time:
 \begin{equation}\label{bestfit}
-    \textbf{X'} \approx \textbf{A} \textbf{X}
+\textbf{X'} = \textbf{A} \textbf{X}
 \end{equation}
-The $\approx$ symbol is used since in a general framework, the state matrices can be non-square. The best fit linear operator can be computed as:
+The best fit linear operator can be computed as:
 \begin{equation}\label{bestfit}
     \textbf{A} = argmin \parallel \textbf{X'} - \textbf{A} \textbf{X} \parallel_F = \textbf{X'} \textbf{X}^\dagger 
 \end{equation}
-where $\parallel \parallel_F$ denotes the Frobenius norm and $^\dagger$ denotes the pseudo-inverse. The most efficient way to solve this problem, especially in case of high dimensional state matrix, is computing the spectral decomposition of the pseudo-inverse through the economy SVD:
+where $\parallel \parallel_F$ denotes the Frobenius norm and $^\dagger$ denotes the pseudo-inverse. The most efficient way to solve this problem, especially in case of a high dimensional state matrix, is computing the spectral decomposition of the pseudo-inverse through the economy SVD:
 \begin{equation}\label{svd}
     \textbf{X} \approx \tilde{\textbf{U}} \tilde{\bf\Sigma} \tilde{\textbf{V}}^*
 \end{equation}
-where the $\tilde{}$ indicates that the economy SVD with rank $r$ has been used, $^*$ denotes the complex conjugate transpose and $\tilde{\textbf{U}} \in \mathcal{C}^{n \times r}$, $\tilde{\textbf{V}} \in \mathcal{C}^{m \times r}$, and $\tilde{\bf{\Sigma}} \in \mathcal{C}^{r \times r}$. Note that, $r$ can be the rank of the original matrix $\textbf X$ or smaller value used to embed the data set into a lower dimension. At this point we can project the matrix $\textbf{A}$ onto the $\tilde{\textbf{U}}$ modes:
+where the $\tilde{} $ indicates that the economy SVD with rank $r$ has been used, $^*$ denotes the complex conjugate transpose and $\tilde{\textbf{U}} \in \mathcal{C}^{n \times r}$, $\tilde{\textbf{V}} \in \mathcal{C}^{m \times r}$, and $\tilde{\bf{\Sigma}} \in \mathcal{C}^{r \times r}$. Note that, $r$ can be the rank of the original matrix $\textbf X$ or, a smaller value used to embed the data set into a lower dimension. At this point it is possible to project the matrix $\textbf{A}$ onto the $\tilde{\textbf{U}}$ modes:
 \begin{equation}\label{atilde}
     \textbf{A} = \tilde{\textbf{U}}^* \tilde{\textbf{A}} \tilde{\textbf{U}} = \tilde{\textbf{U}}^* \textbf{X'} \tilde{\textbf{V}} \tilde{\bf{\Sigma}}^{-1}
 \end{equation}
-Since we reduce reduce the dimensionality of $\textbf{A}$ through a similarity transformation, the non zero eigenvalues have been preserved The spectral decomposition of $\tilde{\textbf{A}}$ can be computed as:
+The spectral decomposition of $\tilde{\textbf{A}}$ can be computed as:
 \begin{equation}\label{specdec}
     \tilde{\textbf{A}} \textbf{W} = \textbf{W} \bf{\Lambda} 
 \end{equation}
-where the diagonal matrix $\bf{\Delta}$ contains the DMD eigenvalues, equal to the eigenvalues of the matrix $\textbf A$. The DMD modes, which correspond to the high dimensional modes of the matrix $\textbf A$, can be computed as:
+where the diagonal matrix $\bf{\Lambda}$ contains the DMD eigenvalues, equal to the eigenvalues of the matrix $\textbf A$. The DMD modes, which correspond to the high dimensional modes of the matrix $\textbf A$, can be computed as:
 \begin{equation}\label{specdec}
     \bf{\Phi} = \textbf{X'} \tilde{\textbf{V}} \tilde{\bf{\Sigma}}^{-1} \textbf{W}
 \end{equation}
-Given the DMD modes $\bf{\Phi}$ and the DMD eigenvalues $\bf{\Lambda}$ we can compute the state vector in any time instant as:
+Given the DMD modes $\bf{\Phi}$ and the DMD eigenvalues $\bf{\Lambda}$, the state vector can be computed in any time instant as:
 \begin{equation}
     \textbf{x}_k = \bf{\Phi}\bf{\Lambda}^{k-1} \textbf{b} 
 \end{equation}
 where the mode amplitudes are computed given the initial conditions as $\textbf{b} = \bf{\Phi}^\dagger\textbf{x}_1$. 
 
 \subsection{Time-delay Embedding}
-The main idea behind DMD is the capability to approximate the dynamics of the system as a linear combination of the state vector. This idea is the same as when applying linear regression, in which a linear relationship between the input features and output is assumed. We are not living in a linear world and it is very difficult that this assumption holds strictly. The main advantage of building a linear model is the possibility to interpret the results and apply control laws but, we need to be able to manage situations in which this simple idea cannot be applied directly. The simplest case to consider is the one in which we are not able to measure directly the entire states of the system, in this situation, there could be latent variables that influence the dynamics but that we can't directly see. For this reason, latent variables, are sometimes also called hidden variables. One possibility to overcome this situation is to project the state vector into a higher dimension and build a linear model into this new space. This approach is very popular in the machine learning community, just think about support vector machine or linear regression into an extended feature space. In the context of DMD, this idea is also at the core of the \textit{Koopman} operator, finding the best coordinate system in which express our model as a linear one. A very intuitive approach to manage situations in which linear combinations of our state space vector is not enough is one of \textit{time-delay embedding}. In time-delay embedding, we increase the state space by stacking together different delayed copies of the vector $\textbf x$. To better understand how to build the matrix $\textbf X$, let's consider the case of a k time-delay embedding. The resulting matrix, called the \textit{Hankel} matrix, will be composed as:
+The main idea behind DMD is the capability to approximate the dynamics of the system as a linear combination of the state vector. This idea is the same as when applying linear regression, in which a linear relationship between the input features and output is assumed. The main advantage of building a linear model is the possibility to interpret the results and apply control laws, but it is important also to be able to manage situations in which this simple hypothesis cannot be sensibly applied. The simplest case to consider is the one in which it is not possible to measure directly the entire state of the system. In this situation, there could be latent variables that influence the dynamics but that cannot be seen directly. For this reason, latent variables, are sometimes also called \textit{hidden variables}. One possibility to overcome this situation is to project the state vector into a higher dimension and build a linear model into this new space. This approach is very popular in the machine learning community, just think about support vector machine or linear regression into an extended feature space. In the context of DMD, this idea is also at the core of the \textit{Koopman} operator, finding the best coordinate system in which express the model as a linear one. A very intuitive approach to manage situations in which linear combinations of the state space vector is not enough is \textit{time-delay embedding}. In time-delay embedding, the state space is increased by stacking together different delayed copies of the vector $\textbf x$. To better understand how to build the matrix $\textbf X$, let's consider the case of a k time-delay embedding. The resulting matrix, called the \textit{Hankel} matrix, will be composed as:
 \begin{equation}
 \textbf{H} = 
     \begin{bmatrix}
@@ -183,20 +182,21 @@ The main idea behind DMD is the capability to approximate the dynamics of the sy
         x(t_k) & x(t_{k+1}) & \dots &  x(t_{M+k}) 
     \end{bmatrix}
 \end{equation}
-where here we use $M$ columns instead of $m$ since, due to the time delay, we can't use the entire state history in each row. Applying SVD to $\textbf{H}$ we can gain more insight into the real rank of the system, discovering the effective number of the latent variables through the shadow of the manifold in which the system leaves. The real rank of the system is obtained by looking at the energy contained, or variance explained, by each of the singular values.
+Applying SVD to $\textbf{H}$ it is possible gaining more insight into the real rank of the system, discovering the effective number of the latent variables.The real rank of the system is obtained by looking at the energy contained, or variance explained, by each of the singular values.
 
 \subsection{Regression}
-The goal of a regression problem is to learn a mapping from a given $n$-dimensional vector $\textbf{x}$ of input variables to one or more continuous target variables $\textbf{y}$ \cite{bishop2006}. Some examples of regression problems are the prediction of a stock market price, the prediction of future emissions of CO$_2$, the effect of an actuation in robotics and so on. A general regression problem can be formulated as:
+The goal of a regression problem is to learn a mapping from a given $n$-dimensional vector $\textbf{x}$ of input variables to one or more continuous target variables $\textbf{y}$ \cite{bishop2006}. A general regression problem can be formulated as:
 \begin{equation}\label{regression}
 y(\textbf{x}, \textbf{w}) = w_0 + \sum_{j=1}^{n-1}w_j x_j = \textbf{w}^T\textbf{x}
 \end{equation}
-Our goal is to find the best values of the weights $\textbf{w}$. Different approaches exist to find the best combination of weights and the most common are based on the minimization of a loss function.
+The objective is finding the best values of the weights $\textbf{w}$. Different approaches exist to find the best combination of weights and the most common are based on the minimization of a loss function:
 \begin{equation}\label{loss}
 \mathcal{L}(\textbf{w})  = \mathcal{L}_D(\textbf{w}) + \lambda \mathcal{L}_w(\textbf{w})
 \end{equation}
-In equation \eqref{loss} the loss function is composed by two terms: the first one is a measure of the fit quality, typically the squared loss error, and the second one is a term introduced to avoid to overfit the data. According to the second term of the loss we can have: standard Least Squares with $\mathcal{L}_w = 0$, Ridge regression with $\mathcal{L}_w = \parallel \textbf{w} \parallel_2^2$ , Lasso regression with $\mathcal{L}_w =\parallel \textbf{w} \parallel_1$ or Elastic Net which is a combination of Lasso and Ridge. The parameter $\lambda$ determines the intensity of the regularization and is a parameter to be choose with cross-validation.
+In equation \eqref{loss} the loss function is composed by two terms: the first one is a measure of the fit quality, typically the squared loss error, and the second one is a term introduced to avoid to overfit the data. According to the second term of the loss it is possible to have: standard Least Squares with $\mathcal{L}_w = 0$, Ridge regression with $\mathcal{L}_w = \parallel \textbf{w} \parallel_2^2$ , Lasso regression with $\mathcal{L}_w =\parallel \textbf{w} \parallel_1$ or Elastic Net which is a combination of Lasso and Ridge. The parameter $\lambda$ determines the intensity of the regularization and is an  hyperparameter that must be chosen with cross-validation.
+
 \subsection{Sparse Identification of  Nonlinear Dynamics (SINDy)}
-An important observation of most physical system is that their dynamics is usually characterized by few parameters, making the equations sparse in the high-dimensional function space. This is also the main idea behind the Lasso algorithm where among the infinite solutions to the linear problem, the one with the most zero weights is favoured. In the SINDy approach, the philosophy is the same but, with a different point of view. Differently from the classical application of regression in machine learning, where the interest is just in fitting the data, without any distinction between a dynamics or static system, in SINDy we try to explicitly discover the coefficient of the dynamic map in \eqref{dynsys2}. Given a state matrix $\textbf{X}$ and its derivative $\dot{\textbf{X}}$:
+An important observation of most physical system is that their dynamics are usually characterized by few parameters, making the equations sparse in the high-dimensional function space \cite{brunton2016}. This is also the main idea behind the Lasso algorithm, where, among the infinite solutions to the linear problem, the one with the most zero weights is favored. In the SINDy approach, the philosophy is the same, but with a different point of view. Differently from the classical application of regression in machine learning, where the interest is just in fitting the data, without any distinction between a dynamic or static system, in SINDy the goal is to explicitly discover the coefficient of the dynamic map in \eqref{dynsys2}. Given a state matrix $\textbf{X}$ and its derivative $\dot{\textbf{X}}$:
 \begin{equation}
 \textbf{X} = 
 \begin{bmatrix}
@@ -214,7 +214,7 @@ An important observation of most physical system is that their dynamics is usual
 	\dot x_1(t_m) & \dot x_2(t_m) & \dots &  \dot x_n(t_m) 
 \end{bmatrix}
 \end{equation}
-Next we build a library of possible linear and  nonlinear transformation of the state matrix:
+It is possible to build a  library of candidate linear and  nonlinear transformations of the state matrix:
 \begin{equation}
 \bf{\Theta}(\textbf{X}) = 
 \begin{bmatrix}
@@ -223,15 +223,20 @@ Next we build a library of possible linear and  nonlinear transformation of the 
 \vline & \vline & \vline &  & \vline & \vline & 
 \end{bmatrix}
 \end{equation}
-At this point we can set the sparse regression problem as determine the sparse vectors of coefficients $\bf\Xi = [\boldsymbol\xi_1, \boldsymbol\xi_2, ..., \boldsymbol\xi_n]$ that determine which nonlinearity is active:
-
-%------------------------------------------------
+At this point the sparse regression problem is set as determine the sparse vectors of coefficients $\bf\Xi = [\boldsymbol\xi_1, \boldsymbol\xi_2, ..., \boldsymbol\xi_n]$ that discover which nonlinearity is active:
 \begin{equation}
 \dot{\textbf X} = \bf \Theta(\textbf X) \bf{\Xi}
 \end{equation}
+
+\subsection{Artificial Neural Networks (ANNs)}
+The fundamental unit of an ANN is the mathematical model of a neuron, which is able to perform a linear combination with a bias followed by a nonlinear function. The complete architecture is obtained by connecting a certain number of this simple units according to different schemes. The mathematical model of the network can be expressed as:
+\begin{equation}\label{ann}
+y = f_n(A_n, \dots f_2(A_2, f_1(A_1, x)))
+\end{equation}
+where the nested structure is highlighted. In the equation \eqref{ann} $x$ is the input of the network and $y$ the output.
+
 \section{Algorithm Implementation and Development}
 All the algorithms applied to this work have been written in Python 3.7 and through the use of Jupiter and Colab notebooks. Several libraries have been involved:
-
 \begin{itemize}
     \item \textit{NumPy}: linear algebra library,
     \item \textit{SciPy}: efficient numerical routines library,
@@ -240,182 +245,177 @@ All the algorithms applied to this work have been written in Python 3.7 and thro
     \item \textit{PyTorch}: machine learning and deep learning library,
     \item \textit{pyrenn}: neural network library
 \end{itemize}
-
 The use of these libraries, instead of hard code coding, has allowed faster programming and more time for experimentation.
-%------------------------------------------------
 
 \section{Computational Results}
 In this section, all the most relevant results will be briefly presented and discussed.
 
 \subsection{Analysis of Population Dynamics}
 \subsubsection{DMD}
-The first step in the analysis of the dynamics of the snowshow hare and Canada lynx populations has been the augmentation of the data set. Due to the small real data available a cubic spline has been applied to move from $30$ to $581$ samples. The use of splines leads to population values lower than zero, obviously impossible in nature. Has been found that substituting all the population values lower than zero with $1$ help to obtain better results in the dynamics discovery. The first strategy adopted was to approximate and discover the linear model by DMD. In Figure \ref{fig:fig1} the real dynamics and the one approximated through DMD have been reported.
+The first step in the analysis of the dynamics of the snowshow hare and Canada lynx populations has been the augmentation of the data set. Due to the small real data available a cubic spline has been applied to move from $30$ to $581$ samples. The use of splines leads to population values lower than zero, obviously impossible in nature. Has been found that substituting all the population values lower than zero with $1$ helped to obtain better results in the dynamics discovery. The first strategy adopted was to approximate and discover the linear model through DMD. In Figure \ref{fig:fig1} the real dynamics and the one approximated have been reported.
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.9\textwidth]{../figures/dmd.pdf}
-\caption{Real data (left) and DMD approximation (right). Due to the complex behavior exhibited by the two population as simple linear model fails to capture the dynamics.}
+\includegraphics[width=0.9\textwidth]{../figures/dmd.png}
+\caption{Real data (left) and DMD approximation (right). Due to the complex behavior exhibited by the two populations a simple linear model fails to capture the true dynamics.}
 \label{fig:fig1}
 \end{figure}
-Can be easily seen that a simple DMD model onto a $2 \times 580$ matrix is not sophisticated enough to capture the dynamics of the system. Nevertheless, the simple DMD model has discovered that the lynx population increases just after an increase in the hare population, and decreases in the same manner. This is a typical behavior of a predator-pray system. The model can be refined by the adoption of an Hankel matrix through the time-delay embedding method. In the specific, $4$ different time delay have been considered: $10, 50, 100$ and a full embedding provided by the \textit{hankel} method provided by the scipy library. In the full embedding, if the state vector has $m$ time samples, it produces $m$ time-delayed embeddings padding with zeros the last position of each new row added to the matrix in order to compensate the time shift. The real rank of the system can be discovered by looking at the energy captured by the singular values obtained by the SVD of the Hankel matrix. From the Figure \ref{fig:fig2} we can see that, by increasing the time-delay more singular values pop-up from the zero value. The more the non-zero singular values, the more the hidden variables that are not present in the data set but that contribute to the system dynamics. Successively, the DMD has been applied to the four Hankel matrices with ranks respectively, $4$, $10$, $20$ and $40$.
-\begin{figure}[!t]
+Can be easily seen that a simple DMD model onto a $2 \times 580$ matrix is not sophisticated enough to capture the dynamics of the system. Nevertheless, the simple DMD model has discovered that the lynx population increases just after an increase in the hare population, and decreases in the same manner. This is a typical behavior of a predator-pray system. The model can be refined by the adoption of an Hankel matrix through the time-delay embedding method. In the specific, $4$ different time delay have been considered: $10, 50, 100$ and a full embedding provided by the \textit{hankel} method of the scipy library. From Figure \ref{fig:fig2} can be seen that, by increasing the time-delay more singular values pop-up from the zero value. The more the non-zero singular values, the more the hidden variables that are not present in the data set but that contribute to the system dynamics. Successively, the DMD has been applied to the four Hankel matrices with a rank truncation respectively of, $4$, $10$, $20$ and $40$.
+\begin{figure}[!b]
 \centering
-\includegraphics[width=0.9\textwidth]{../figures/td_energy.pdf}
-\caption{Energy accounted for by the singular values of the 4 different Hankel matrix. Increasing the time-delay embedding increase the rank of the embedding manifold.}
+\includegraphics[width=0.9\textwidth]{../figures/td_energy.png}
+\caption{Energy accounted for by the singular values of the 4 different Hankel matrices. Increasing the time-delay embedding increases the rank of the embedding manifold.}
 \label{fig:fig2}
 \end{figure}
-At this point is important to point out that, our goal is not just the mere approximation of the data points but, the goal is to approximate the underlying model, in such a way to be able to forecast unseen future times. To this end, the available points are partitioned into training points and testing points. Since we want to forecast and not interpolate, the training set is composed by the first $80\%$ points, according to the time axis, and the testing points are the remaining ones. Differently, using random split to generate the two data set the result will be just an interpolation, without the possibility to evaluate the effective capacity of the model. Below, in Figure \ref{fig:fig3} the approximated behaviors are reported.
+At this point is important to point out that, the goal is not just the mere approximation of the data points but, it is to approximate the underlying model, in such a way to be able to forecast unseen future times. To this end, the available points have been partitioned into training points and testing points.The training set is composed by the first $80\%$ of points, according to the time axis, and the testing points are the remaining ones. Differently, using random split to generate the two data set the result will be just an interpolation, without the possibility to evaluate the effective capacity of the model. Below, in Figure \ref{fig:fig3}, the approximated behaviors are reported.
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.9\textwidth]{../figures/td_dmd.pdf}
-\caption{Approximation of the system dynamics via DMD. The real behavior has been reported with almost transparent lines. The gray boxes cover the states used to train the models}
+\includegraphics[width=0.9\textwidth]{../figures/td_dmd.png}
+\caption{Approximation of the system dynamics with DMD. The real behavior has been reported with transparent lines. Gray boxes cover the states used to train the models.}
 \label{fig:fig3}
 \end{figure}
-We can see that by increasing the time-delay embedding, and consequently the latent variables introduced into the model, the DMD expansion becomes more capable of follow the real system. Due to the high nonlinear nature of the system, the forecasting is really difficult, the models with $100$ and full embeddings can qualitatively follow the real behavior but not quantitatively. 
+It is possible to see that by increasing the time-delay embedding, and consequently the latent variables introduced into the model, the DMD expansion becomes more capable of following the real system. Due to the high nonlinear nature of the system, the forecasting is really difficult, the models with $100$ and full embeddings can qualitatively follow the real behavior but not quantitatively. 
+
 \subsubsection{Regression Model}
-In the previous paragraph two completely data driven methods have been considered. In mathematics, the analysis of a biological system comprising pray and predator can be performed with the Lotka-Volterra (LV) differential equations. Here we want to apply regression to fit the data to the parameters of LV equations. Ordinary least squares linear regression,  Ridge and standard pseudo-inverse have been applied to the data. As did previously, the data has been splitted in $80\%$ training and $20\%$ test. The best approximation of the system dynamics has been found with the pseudo inverse, but, the really low $R^2=-2.9$ makes this model really unreliable. In Figure \ref{fig:fig4} the true behavior and the one obtained by integrating the LV model with fitted parameters to data is reported. Except for the delayed picks of the predator with respect to the pray, the model is completely unable to represent the system dynamics.
+In the previous paragraph two completely data driven methods have been considered. In mathematics, the analysis of a biological system comprising pray and predator can be performed with the Lotka-Volterra (LV) differential equations. Here, the regression setting to fit the data to the parameters of LV equations is considered. Ordinary least squares linear regression,  Ridge and standard pseudo-inverse have been applied to the data. As did previously, the data has been splitted in $80\%$ training and $20\%$ testing. The best approximation of the system dynamics has been found with the pseudo inverse, but, the really low $R^2=-2.9$ makes this model very unreliable. In Figure \ref{fig:fig4} the true behavior and the one obtained by integrating the LV model with fitted parameters to data is reported. Except for the delayed picks of the predator with respect to the pray, the model is completely unable to represent the system dynamics.
 \begin{figure}[!t]
 	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/history_fit.pdf}
-	\caption{Real behavior of the system (left) and approximation via integration of LV equations with fitted parameters (right). The gray boxes cover the states used to train the model}
+	\includegraphics[width=0.9\textwidth]{../figures/history_fit.png}
+	\caption{Real behavior of the system (left) and approximation through integration of LV equations with fitted parameters (right). Gray boxes cover the states used to train the model.}
 	\label{fig:fig4}
 \end{figure}
+
 \subsubsection{Best Fit Nonlinear Sparse Model}
-Another possibility to approximate the system dynamics is through sparse identification of the best fit nonlinear model. A library of candidate feature expansion was built and the Lasso algorithm has been applied to discover which of the features affect the system behavior. Once discovered the sparse parametrization of the dynamics the envelope of the species in time can be reconstructed as:
+Another possibility to approximate the system dynamics is through sparse identification of the best fit nonlinear model. A library of candidate feature expansion has been built and the Lasso algorithm has been applied to discover which of the features affect the system behavior. Once discovered the sparse parametrization of the dynamics the envelope of the species in time can be reconstructed as:
 \begin{equation}\label{nlbestfit}
 \textbf{x}(t+1) = \text{LassoModel}_{\alpha_{opt}}(\textbf{x}(t)) \Delta t + \textbf{x}
 \end{equation}
-where the Lasso model was trained to approximate the relation between $\textbf{x}$ and $d/dt \textbf{x}(t)$. The Lasso algorithm has been trained with different shrinkage coefficient and the choice of the best was made by valuating the $r^2$ error between the reconstructed dynamics and the real one. In Figure \ref{fig:fig5} can be observed the library involved and the value of the coefficient for the best Lasso model with $\alpha=0.005$.
-\begin{figure}[!b]
-	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/nl_param_fit.pdf}
-	\caption{Sparse coefficients of the best fit nonlinear model}
-	\label{fig:fig5}
-\end{figure}
-The approximation of the dynamics is reported in Figure \ref{fig:fig6}
+The Lasso algorithm has been trained with different shrinkage coefficients and the choice of the best one has been made by evaluating the $R^2$ error between the reconstructed dynamics and the real one. In Figure \ref{fig:fig5} can be observed the library involved and the values of the coefficients for the best Lasso model with $\alpha=0.005$.
 \begin{figure}[!t]
 	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/nl_history_fit.pdf}
-	\caption{Real behavior of the model (left) and reconstruction of the dynamics with SINDy algorithm (right). The gray box covers the states used to train the model}
+	\includegraphics[width=0.7\textwidth]{../figures/nl_param_fit.png}
+	\caption{Sparse coefficients of the best fit nonlinear model.}
+	\label{fig:fig5}
+\end{figure}
+The approximation of the dynamics is reported in Figure \ref{fig:fig6}.
+\begin{figure}[!b]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../figures/nl_history_fit.png}
+	\caption{Real behavior of the model (left) and reconstruction of the dynamics with SINDy algorithm (right). The gray box covers the states used to train the model.}
 	\label{fig:fig6}
 \end{figure}
 Also in this case the dynamics of the two species is not captured well, indeed the model just predict the means as confirmed by the $R^2$ equal to $0$.
-%------------------------------------------------
+
 \subsection{Analysis of Kuramoto-Sivashinsky and Reaction-Diffusion Equations}
 \subsubsection{Time-Marching Neural Network}
-The behavior of the KS equation has been analyzed and an ANN has been built to approximate the Runge-Kutta methods for the simulation of the system dynamics. The approximation of the Runge-Kutta methods has been obtained by training a network able to predict the future state given the actual one in such a way to advance the system in time. First of all a time-spatial data set composed by $n_x=128$ points in space and $n_t=251$ points in time has been built. Successively, this data set has been splitted into train test sets according to the proportion $ 80/20$. Since we want to be able to forecast the system dynamics the data set split has been made in such a way that the training set is the first part the time history and the test one, the last part. Four different NN have been considered with a fixed architecture but a different number of neurons in each layer. The hidden layers are 3, all with ReLU activation functions while for the output layer no activation functions are used (i.e. identity transfer function). No regularization like weights decay or dropout have been considered. The NN considered are composed respectively by $n_x/2$, $n_x$, $2n_x$ and $3n_x$ hidden units and were trained for $1000$ epochs. In Figure \ref{fig:fig7} the difference between the real behavior and the ones approximated by the ANN are reported, accompanied by the relative Mean Squared Errors in \ref{table:1}.
-\begin{figure}[!t]
-	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/fore_err.pdf}
-	\caption{Real behavior of the model (left) and reconstruction of the dynamics with SINDy algorithm (right). The gray box covers the states used to train the model}
-	\label{fig:fig7}
-\end{figure}
+The behavior of the KS equation has been analyzed and several ANNs have been built to approximate the Runge-Kutta methods for the integration of the system dynamics. The approximation of the Runge-Kutta methods has been obtained by training a network able to predict the future state given the actual one in such a way to advance the system in time. First of all, a time-spatial data set composed by $n_x=128$ points in space and $n_t=251$ points in time has been generated. Successively, this data set has been split into train, validation and test sets according to the proportion $ 80/10/10$. Four different NN have been considered with a fixed architecture but a different number of neurons in the layers. The MSE of the $4$ networks onto the validation and test set are reported in Table \ref{table:1}.
 \begin{table}[!b]
 	\begin{centering}
 	\begin{tabular}{cccc}
-		\hline
-		\multicolumn{4}{c}{MSE}       \\ \hline
+		\hline \hline
+		\multicolumn{4}{c}{MSE validation}       \\ \hline \hline
 		ANN 1 & ANN 2 & ANN 3 & ANN 4 \\ \hline
-		1.65  & 1.29  & 1.18  & 1.16  \\ \hline
+		0.39  & 0.26  & 0.28  & 0.22  \\ \hline
 	\end{tabular}
+\quad 
+\begin{tabular}{cccc}
+	\hline \hline
+	\multicolumn{4}{c}{MSE testing}       \\ \hline \hline
+	ANN 1 & ANN 2 & ANN 3 & ANN 4 \\ \hline
+	1.86  & 0.41  & 1.07  & 0.9  \\ \hline
+\end{tabular}
 \caption{Mean squared errors of the $4$ different ANNs}
 \label{table:1}
 \end{centering}
 \end{table}
-We can see that the network $4$ is the one that achieves the best performance onto the test set. However, must be pointed out that, this is the result for the specific training considered so it is not true that the ANN $4$ is always the best. From this time this trained model will be used for the following analysis. In Figure \ref{fig:fig8} the forecasting of the network until the final time of $200s$ is reported.
-\begin{figure}[!t]
-	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/fore.pdf}
-	\caption{Forecasting of ANN 3 for $200 s$ (right) versus integration of the differential KS equation (left)}
-	\label{fig:fig8}
-\end{figure}
-We can see that the network start to reproduce some kin of periodic patterns, being unable to follow the chaotic behavior of the system.
-\subsubsection{Different Initial Conditions}
-At this point we evaluate  if the ANN is able to generalize also to different initial conditions of the ones used to generate the training data. First of all we try the previous trained ANN with a different parameter L, governing the shape of the initial conditions. The L value is changed from $32$ to $34$ and what is observed is that the network does not capture this modification and still behaves as in the case of L equal to $32$. After this tentative the same ANN 4 has been retrained with a data set composed by simulations with $L = 2, 4, 12, 16, 20, 27, 32, 45, 55$ and $64$ for $2000$ epochs and adding as input also the actual L. Also in this case there were very low performances, and reason is probably in the highly nonlinear and chaotic behavior of the system which produces completely different dynamical patterns also for very small changes in the initial conditions. Just to have an idea of how bad the network si behaving after being trained with a data set composed of time history of a so chaotic system, in Figure \ref{fig:fig9} the result of the time-marching ANN is reported.
-\begin{figure}[!t]
-	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/fore_diff_ic2.pdf}
-	\caption{Real behavior (left) and approximation through time-marching neural network}
-	\label{fig:fig9}
-\end{figure}
-\newpage
-\subsubsection{Analysis of Reaction Diffusion System}
-In this section will be made a brief description of the application of a neural network to the approximation of the RD system. A data set composed by $201$ snapshots of the $32 \times 32$ spatial discretization of the RD system have been generated with Runge-Kutta integration scheme. The standard SVD has been applied to the flattened state matrix composed by the first $200$ snapshots in order to compute a lower dimension representation of the matrix. The rank of the reduction has been chosen by looking at the energy captured by each mode, and in the specific case a rank $14$ has been considered. In this way the original spatial dimension of $32 \times 32$ has been drastically reduced making easier to train a neural network to forecast the future state of the system. A $3$ hidden unit architecture, with ReLU activation function and $100$ nodes for layer has been trained with the training set composed by the first $161$ time samples. This network, has been successively applied recursively, to predict the future states starting from the last time snapshot used in the training set. It is possible to see that the network is capable to capture the behavior of the system for few time step ahead from the training set in Figure \ref{fig:fig10} but, accumulating errors during the forecast for long time step ahead is not accurate enough Figure \ref{fig:fig11}.
+The best network obtained, ANN 2, is composed by an encoder-decoder structure with a number of input and output neurons equal to $n_x$. The choice of the best model is based on the error onto the test set, the only set never used for the optimization of the hyperparameters. The forecasting of ANN 2 for a short time in future (test set) and for a long time in future are reported in Figure \ref{fig:fig8}.
 \begin{figure}[!b]
 	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/forecast_RD.pdf}
-	\caption{Upper row real behavior, lower row prediction obtained by applying recursively the ANN near in future}
+	\includegraphics[width=0.9\textwidth]{../figures/fore.png}
+	\caption{Integration (left) and forecasting (right) of ANN 2. Gray boxes cover the times used to train the models.}
+	\label{fig:fig8}
+\end{figure}
+For the test set the network behaves really well, but after some times, it starts to reproduce some kind of periodic pattern, being unable to follow the chaotic behavior of the system.
+
+\subsubsection{Different Initial Conditions}
+At this point can be evaluated if the ANN is able to generalize also to different initial conditions of the ones used to generate the training data. First of all, the previously trained ANN is tested with a different parameter L, governing the shape of the initial conditions (IC). The L value is changed from $32$ to $34$ and, as expected the network didn't capture the change in the IC. Subsequently, it was tried to train a network on $6$ different simulations with $L \in [12, 27]$, providing this information as an input. Also in this case bad performance have been obtained, as can be seen in Figure \ref{fig:fig9}
+\begin{figure}[!b]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../figures/diff_ic.png}
+	\caption{Integration (left) and forecasting (right) for different initial conditions.}
+	\label{fig:fig9}
+\end{figure}
+
+\subsection{Analysis of Reaction Diffusion System}
+A data set composed by $201$ snapshots of the $32 \times 32$ spatial discretization of the RD system have been generated with Runge-Kutta integration scheme. The standard SVD has been applied to the flattened state matrix composed by the first $200$ snapshots in order to compute a lower dimension representation of the matrix. The rank of the reduction has been chosen by looking at the energy captured by each mode, and in the specific case a rank $14$ has been considered. In this way the original spatial dimension of $32 \times 32$ has been drastically reduced making easier to train a neural network to forecast the future state of the system. A $3$ hidden layers architecture, with ReLU activation function and $100$ nodes for layer has been trained with the training set composed by the first $161$ time samples. From  Figure \ref{fig:fig10} it is possible to see that the network is capable to correctly capture the behavior of the system also out of the training set. It interesting to notice, from the last two columns of the figure, that the network begins to anticipate the behavior of the real system as the time increases.
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../figures/forecast_RD3.png}
+	\caption{In the upper row the real behavior, in the lower row the prediction obtained by applying recursively the ANN.}
 	\label{fig:fig10}
 \end{figure}
-\begin{figure}[!t]
+\begin{figure}[!b]
 	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/forecast_RD2.pdf}
-	\caption{Upper row real behavior, lower row prediction obtained by applying recursively the ANN far in future}
-	\label{fig:fig11}
-\end{figure}
-\begin{figure}[!t]
-	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/comparison_train.pdf}
-	\caption{Real and approximated history of the $x(t)$ coordinate of Lorenz equations. On the left the results of the ANN trained with LM and on the right those of the ANN trained with Adam}
+	\includegraphics[width=0.9\textwidth]{../figures/comparison_train.png}
+	\caption{Real and approximated history of the $x(t)$ coordinate of Lorenz equations. On the left the results of the ANN trained with LM and on the right those of the ANN trained with Adam.}
 	\label{fig:fig12}
 \end{figure}
 \subsection{Analysis of Lorenz Equations}
 \subsubsection{Neural Network Approximation}
-In this section will be presented the results on the use of a neural network to approximate the dynamics of Lorenz's equations. Two different type of architectures has been trained, one exploiting the PyTorch library with $3$ hidden units, $10$ neurons for layer, \textit{ReLU} activation function and trained with SGD, and the other exploting the pyrenn library, with same architecture but \textit{tanh} activation functions and trained with Levenberg–Marquardt. In Figure \ref{fig:fig12} the envelope for the $x$ coordinate of the Lorenz equations for different values of $\rho$ have been reported. 
-The ANN trained with Levenberg–Marquardt (LM) completely outperform the ANN trained with SGD. This result is probably due to the fact the SGD is a powerful, and probably the only algorithm, that can be applied in case of Big Data but for simple problems, in terms of input dimension, the possibility to approximate the Hessian matrix helps improving the training. On the other hand, the approximation of the Hessian makes the training really slow when the dimension of the input space or of the hidden layers become high. Should be observed that was not applied the standard SGD algorithm but a more sophisticated version called Adam. Afterwards, the network trained with LM has been applied to the Lorenz equations with $\rho$ values never seen during the training. In Figure \ref{fig:fig13} it is possible to see that the model works quite well also on out-of-sample parameterizations.
+Two different type of architectures have been trained, one exploiting the PyTorch library with $3$ hidden units, $10$ neurons for layer, \textit{ReLU} activation function and trained with SGD, and the other exploting the pyrenn library, with same architecture but \textit{tanh} activation functions and trained with Levenberg–Marquardt algorithm. In Figure \ref{fig:fig12} the envelopes for the $x$ coordinate of the Lorenz equations for different values of $\rho$ have been reported. 
+The ANN trained with Levenberg–Marquardt (LM) completely outperform the ANN trained with SGD. This result is due to the fact the SGD is a powerful, and probably the only algorithm, that can be applied in case of Big Data, but for simple problems, in terms of input dimension, the possibility to approximate the Hessian matrix helps improving the training. On the other hand, the approximation of the Hessian makes the training really slow when the dimension of the input space or of the hidden units become high. Afterwards, the network trained with LM has been applied to the Lorenz equations with $\rho$ values never seen during the training. In Figure \ref{fig:fig13} it is possible to see that the model works quite well also on out-of-sample parameterizations.
 \begin{figure}[!b]
 	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/rho_oos.pdf}
-	\caption{ANN trained with LM algorithm performance onto unseen dynamics. The different dynamics have been generated integrating the Lorenz equations with different values of $\rho$}
+	\includegraphics[width=0.9\textwidth]{../figures/rho_oos.png}
+	\caption{ANN trained with LM algorithm performance onto unseen dynamics. The different dynamics have been generated integrating the Lorenz equations with different values of $\rho$.}
 	\label{fig:fig13}
 \end{figure}
+The possibility of predicting the jump from one lobe to another of the trajectory through the networks has also been investigated. Bad results have been obtained for this application and no relative graphs are reported.
+
 \subsection{Analysis of  Belousov-Zhabotinsky Chemical Oscillator Movie}
-The video of the BZ oscillator has been analyzed with the goal of finding its principal modes. First of all the singular values energy has been calculated in order to decide the rank-truncation of the system for the DMD expansion. With a rank truncation of $101$ nice results have been obtained. As in the previous problems the available data has been split in train and test and, in Figure \ref{fig:fig14} the DMD approximation of the first time instants are reported, they were in training set and a good approximation has been achieved. In Figure \ref{fig:fig15}, it is possible to see that good approximations are obtained also for the frames in the test set. In this case the DMD modes fails to capture the behavior of the system in the top right of the pictures, where new wave ridges begin to appear at high frequency.
+The video of the BZ oscillator has been analyzed with the goal of finding its principal dynamics modes. First of all the singular values energy has been calculated in order to decide the rank-truncation of the system for the DMD expansion. With a rank truncation of $10$, nice results have been obtained. As in the previous problems the available data has been split in train and test. In Figure \ref{fig:fig14} the DMD approximations of the first time instants are reported, they are points in the training set and a good approximation has been achieved. In Figure \ref{fig:fig15}, it is possible to see that good approximations are obtained also for the frames in the test set. In this case the DMD modes fails to capture the behavior of the system in the top right of the pictures, where new wave ridges begin to appear at high frequency.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/BZ_closetime.pdf}
-	\caption{DMD approximation on the training data set}
+	\includegraphics[width=0.9\textwidth]{../figures/BZ_closetime.png}
+	\caption{DMD approximation on the training data set.}
 	\label{fig:fig14}
 \end{figure}
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/BZ_fartime.pdf}
-	\caption{DMD approximation on the test data set. This is a forecasting since the test set are the last frames of the video}
+	\includegraphics[width=0.9\textwidth]{../figures/BZ_fartime.png}
+	\caption{DMD forecasting on the test data set.}
 	\label{fig:fig15}
 \end{figure}
-It is also interesting to look at the reduced left and right singular vectors. The first $4$ singular vectors are reported in Figure \ref{fig:fig16}. Surprisingly enough, the first spatial mode does not reflect the concentric structures but the bubbles developed during the reaction.
+It is also interesting to look at the reduced left and right singular vectors. The first $4$ singular vectors are reported in Figure \ref{fig:fig16}. Surprisingly enough, the first spatial mode does not reflects the concentric structures but the bubbles developed during the reaction.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.9\textwidth]{../figures/BZ_firstmodes.pdf}
-	\caption{First left (upper) and right (lower) singular vectors}
+	\includegraphics[width=0.9\textwidth]{../figures/BZ_firstmodes.png}
+	\caption{First left (upper) and right (lower) singular vectors.}
 	\label{fig:fig16}
 \end{figure}
-\newpage
+
 \section{Summary and Conclusions}
 In this report, different strategies to analyze, investigate and approximate complex dynamical systems have been presented. The performance of each strategy strongly depends on the complexity of the system. Different considerations can be extracted:
 \begin{itemize}
-	\item SVD can be applied to reduce the dimension of the system before building complex surrogate models as a neural network.
-	\item DMD can be applied to discover the principal dynamics modes and, for some problems, also to forecast the system behavior.
+	\item SVD can be applied to reduce the dimension of the system before building complex surrogate models as neural networks.
+	\item DMD can be applied to discover the principal dynamics modes, and for some problems, also to forecast the system behavior.
 	\item For small-dimensional problems and small networks, the LM  algorithm allows outperforming the level of accuracy obtained with SGD.
 	\item A sparse representation of the model allows gaining more insight into the behavior of the system.
-	\item Its really hard to train a neural network that can be adopted as a surrogate of the Runge-Kutta scheme. One possibility to obtain better results is to combine the network with a Kalman filter or to use models that are not based on the hypothesis of a markovian process, as for example Recurrent Neural Networks (RNN).
+	\item Its really hard to train a neural network that can be adopted as a surrogate of the Runge-Kutta scheme. One possibility to obtain better results is to combine the network with a Kalman filter or to use models that are not based on the hypothesis of independence between samples, as for example Recurrent Neural Networks (RNN).
 \end{itemize}
 
-%----------------------------------------------------------------------------------------
-%	REFERENCE LIST
-%----------------------------------------------------------------------------------------
 \begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
-	
 	\bibitem[1]{brunton2019}
 	Brunton, S., \& Kutz, J. (2019). Data-Driven Science and Engineering: Machine Learning, Dynamical Systems, and Control. Cambridge: Cambridge University Press.
 	
 	\bibitem[2]{bishop2006}
 	Bishop, C.~M. (2006). Pattern Recognition and Machine Learning (Information Science and Statistics). Berlin: Springer-Verlag
 	
-	
+	\bibitem[3]{brunton2016}
+	Brunton, S.,  Proctor, J \& Kutz, J. (2016). Discovering Governing Equations From Data by Sparse Identification of Nonlinear Dynamical Systems.
+	Proceedings of the National Academy of Sciences Apr 2016, 113 (15),
 \end{thebibliography}
 
-%----------------------------------------------------------------------------------------
 \appendix
 \section{Codes}
-All the codes have been implemented in Jupyter Notebooks. Please visit the 
+Please visit the Githug page \url{https://github.com/stepyt/modelling-from-measurements/tree/master/homework} for all the detailed notebooks, more figures and comments. The advantage offered by Jupyter notebooks is the possibility to store in a same sheet codes and figures, doing so, the work can be presented in a nicer way.
 \end{document}
